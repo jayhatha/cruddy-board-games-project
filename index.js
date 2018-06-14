@@ -23,7 +23,7 @@ app.set('view engine', 'ejs');
 app.get('/games', function(req, res) {
       var fileContents = fs.readFileSync('./games.json');
       var games = JSON.parse(fileContents);
-      res.render('index', {games: games, id: req.params.name});
+      res.render('index', {games: games});
 });
 
 // | GET | /games/new | new | return an HTML form for creating a new game |
@@ -56,9 +56,9 @@ app.get("/games/:name", function(req, res) {
 // | GET | /games/:name/edit | edit | return an HTML form for editing a game |
 
 app.get('/games/:name/edit', function(req, res) {
-  var games = fs.readFileSync("games.json");
+var games = fs.readFileSync("games.json");
 games = JSON.parse(games);
-res.render('edit', {game: games[req.params.name], id: req.params.name});
+res.render('edit', {game: games[req.params.name], name: req.params.name});
   });
 
 
@@ -66,18 +66,11 @@ res.render('edit', {game: games[req.params.name], id: req.params.name});
 
 app.put("/games/:name", function(req, res) {
   // returns all rappers
-  var Games = fs.readFileSync("games.json");
+  var games = fs.readFileSync("games.json");
   games = JSON.parse(games);
-  var gameIndex = req.params.name;
-  var gameName = req.body.name;
-  var gameDesc = req.body.description;
-  if (mcIndex >= mcs.length) {
-    res.send('error');
-  } else {
-  games.splice(mcIndex, 1, {name: gameName, albums: gameDesc} );
+  games.splice(games[req.params.name], 1, {name: req.body.name, description: req.body.description} );
   fs.writeFileSync("./games.json", JSON.stringify(games));
   res.json(games);
-}
 });
 
 

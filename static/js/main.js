@@ -1,11 +1,11 @@
-console.log("JS good to go, sir!");
+
 
 // listen for a "submit" event for the edit page. the edit form will live
 // at the path GET /games/:name/edit. Use AJAX to send a PUT request to the
 // appropriate URL
 
 $(document).ready(function() {
-    $('form').on('submit', function(event) {
+    $('.update').on('submit', function(event) {
         event.preventDefault();
         var newData = $(this).serialize();
         var url = $(this).attr('action');
@@ -15,7 +15,7 @@ $(document).ready(function() {
             url: url,
             data: newData
         }).done(function(data) {
-            console.log(data);
+            console.log('ughhgh');
             window.location = '/games';
         });
     });
@@ -25,7 +25,7 @@ $(document).ready(function() {
 // to the appropriate URL
 
 
-    $('a').on('click', function(event) {
+    $('.delete').on('click', function(event) {
       event.preventDefault();
       var url = $(this).attr('href');
       $.ajax({
